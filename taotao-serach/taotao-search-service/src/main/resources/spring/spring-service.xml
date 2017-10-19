@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+        
+    <context:component-scan base-package="com.taotao.solr.service,com.taotao.activeMQ">
+    </context:component-scan>
+	
+	<!-- 开启aop -->
+	<aop:aspectj-autoproxy />
+	
+	
+	<!-- 配置事物 -->
+	<!-- 1.配置事物管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- 2.通知-->
+	<tx:advice id="txadvice" transaction-manager="transactionManager">
+		<!-- 传播行为 -->
+		<tx:attributes>
+			<tx:method name="select*" read-only="true"/>
+			<tx:method name="find*" read-only="true"/>
+			<tx:method name="query*" read-only="true"/>
+			<tx:method name="addDocument" read-only="true"/>
+			<tx:method name="create*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="**" propagation="REQUIRED"/>
+		</tx:attributes>
+	</tx:advice>
+	<!-- 设置切面 -->
+	<aop:config>
+		<aop:pointcut expression="execution(* com.taotao.solr.service.*.*(..))" id="txpointcut"/>
+		<aop:advisor advice-ref="txadvice" pointcut-ref="txpointcut"/>
+	</aop:config>
+	
+</beans>
+
+
+
+
+
+
+
+
+
+

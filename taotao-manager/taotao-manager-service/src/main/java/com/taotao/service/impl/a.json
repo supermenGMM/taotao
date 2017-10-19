@@ -1,0 +1,12 @@
+{"total":10,"rows":[
+{"id":1,"itemCatId":3,"itemCatName":"电子书","created":1428027682000,"updated":1428027682000,"paramData":"组名1,组名2,组名3,"},
+{"id":2,"itemCatId":560,"itemCatName":"手机","created":1428028812000,"updated":1428028812000,"paramData":"主体,网络,存储,"},
+{"id":3,"itemCatId":298,"itemCatName":"婴幼奶粉","created":1433476785000,"updated":1433476785000,"paramData":"g1,g2,g3,"},
+{"id":21,"itemCatId":440,"itemCatName":"润滑油","created":1433477081000,"updated":1433477081000,"paramData":"1,2,3,4,"},
+{"id":22,"itemCatId":298,"itemCatName":"婴幼奶粉","created":1433477287000,"updated":1433477287000,"paramData":"f1,f2,"},
+{"id":23,"itemCatId":257,"itemCatName":"沐浴","created":1433477445000,"updated":1433477445000,"paramData":"12,"},
+{"id":24,"itemCatId":443,"itemCatName":"滤清器","created":1433477476000,"updated":1433477476000,"paramData":"股氯气,"},
+{"id":25,"itemCatId":298,"itemCatName":"婴幼奶粉","created":1433478061000,"updated":1433478061000,"paramData":"1,"},
+{"id":26,"itemCatId":582,"itemCatName":"数码相机","created":1437641072000,"updated":1437641072000,"paramData":"分组1,分组2,"},
+{"id":30,"itemCatId":432,"itemCatName":"花草茶","created":1507689196000,"updated":1507689196000,"paramData":"分组1,分组2,"}
+]}

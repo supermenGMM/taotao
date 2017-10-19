@@ -1,0 +1,51 @@
+﻿<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd 
+		 http://code.alibabatech.com/schema/dubbo     
+              http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+              
+     <context:property-placeholder location="classpath:resource/*.properties"/>
+	<!-- 文件上传解析器 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="5242880"></property>
+		<property name="defaultEncoding" value="UTF-8"></property>
+	</bean>
+	<!-- 处理器映射器，和处理器适配器的配置 -->
+	<mvc:annotation-driven></mvc:annotation-driven>
+
+	<!-- 试图解析器 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" /><!-- ##### -->
+		<property name="prefix" value="/WEB-INF/jsp"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+	<!-- 扫描controller -->
+	<context:component-scan base-package="com.taotao.rest.controller"></context:component-scan>
+
+	<!--2静态资源默认的servlet配置， （1）允许对静态资源的处理：js，gif （2）允许使用“/”做整体映射 -->
+	<!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL -->
+	<!-- --><!-- 不知道怎么用###### -->
+	<mvc:default-servlet-handler />
+
+	<!-- 定义无需Controller的url<->view直接映射。###### -->
+	<mvc:view-controller path="/index.html" view-name="forward:/WEB-INF/jsp/index.jsp" />
+
+<!-- <dubbo:reference id="tbItemCatService" interface="com.taotao.rest.service.TbItemCatService"></dubbo:reference>
+ -->	<import resource="consumer.xml"/>
+</beans>

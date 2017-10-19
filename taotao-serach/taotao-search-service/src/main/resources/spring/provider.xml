@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans.xsd   
+        http://www.springframework.org/schema/context   
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd  
+        http://code.alibabatech.com/schema/dubbo   
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd   
+        ">
+       <dubbo:registry  protocol="zookeeper" address="192.168.55.128:2181"/>
+       <dubbo:protocol id="searchDubbo" name="dubbo" dispatcher="message" 
+        threadpool="limited"  port="20882" ></dubbo:protocol>
+	<!-- 同样可以给dubbo:service配置。给service配，则遵守就近原则 -->
+	<dubbo:provider timeout="2000" cluster="failover"
+		retries="2"></dubbo:provider>
+	<bean id="searchService" class="com.taotao.solr.service.impl.SearchServiceImpl"></bean>
+	<dubbo:service timeout="20000" interface="com.taotao.solr.service.SearchService" ref="searchService" protocol="searchDubbo"></dubbo:service>
+	
+	<dubbo:service ref="itemSearchService" interface="com.taotao.solr.service.ItemSearchService" protocol="searchDubbo"></dubbo:service>
+</beans>

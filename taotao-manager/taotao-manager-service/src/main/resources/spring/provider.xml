@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans.xsd   
+        http://www.springframework.org/schema/context   
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd  
+        http://code.alibabatech.com/schema/dubbo   
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd   
+        ">
+
+	<!-- 同样可以给dubbo:service配置。给service配，则遵守就近原则 -->
+	<dubbo:provider timeout="2000" cluster="failover"
+		retries="2"></dubbo:provider>
+
+	<!-- 声明需要暴露的服务接口 cluster是错误集群方式,retries重试次数。 -->
+
+	<bean id="tbUserService" class="com.taotao.service.impl.TbUserServiceImpl"></bean>
+	<dubbo:service interface="com.taotao.service.TbUserService"
+		ref="tbUserService"></dubbo:service>
+		
+	<bean id="tbItemService" class="com.taotao.service.impl.TbItemServiceImpl"></bean>
+	<dubbo:service interface="com.taotao.service.TbItemService"
+		ref="tbItemService"></dubbo:service>
+		
+	<bean id="tbItemCatService" class="com.taotao.service.impl.TbItemCatServiceImpl"></bean>
+	<dubbo:service interface="com.taotao.service.TbItemCatService" ref="tbItemCatService"></dubbo:service>
+	
+	<bean id="tbItemDescService" class="com.taotao.service.impl.TbItemDescServiceImpl"></bean>
+	<dubbo:service interface="com.taotao.service.TbItemDescService" ref="tbItemDescService"></dubbo:service>
+	
+	<bean id="tbItemParamService" class="com.taotao.service.impl.TbItemParamServiceImpl"></bean>
+	<dubbo:service interface="com.taotao.service.TbItemParamService" ref="tbItemParamService"></dubbo:service>
+	
+	<bean id="tbItemParamItemService" class="com.taotao.service.impl.TbItemParamItemServiceImpl"></bean>
+	<dubbo:service interface="com.taotao.service.TbItemParamItemService" ref="tbItemParamItemService"></dubbo:service>
+	
+	<bean id="tbContentService" class="com.taotao.service.impl.TbContentServiceImpl"></bean>
+	<dubbo:service interface="com.taotao.service.TbContentService" ref="tbContentService"></dubbo:service>
+	
+	<bean id="tbContentCategroyService" class="com.taotao.service.impl.TbContentCategroyServiceImpl"></bean>
+	<dubbo:service interface="com.taotao.service.TbContentCategroyService" ref="tbContentCategroyService"></dubbo:service>
+	
+	
+</beans>

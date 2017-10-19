@@ -1,0 +1,64 @@
+﻿
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd 
+		 http://code.alibabatech.com/schema/dubbo     
+              http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	<!-- 文件上传解析器 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="5242880"></property>
+		<property name="defaultEncoding" value="UTF-8"></property>
+	</bean>
+	<!-- 处理器映射器，和处理器适配器的配置 -->
+	<mvc:annotation-driven></mvc:annotation-driven>
+
+	<!-- 试图解析器 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" /><!-- ##### -->
+		<property name="prefix" value="/WEB-INF/jsp"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+	<!-- 扫描controller -->
+	<context:component-scan base-package="com.taotao.controller,com.taotao.uitl.controller"></context:component-scan>
+
+	<!--2静态资源默认的servlet配置， （1）允许对静态资源的处理：js，gif （2）允许使用“/”做整体映射 -->
+	<!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL -->
+	<!--  --><!-- 不知道怎么用###### -->
+	<mvc:default-servlet-handler />
+	
+	<!-- 定义无需Controller的url<->view直接映射。###### -->
+	<!-- <mvc:view-controller path="/" view-name="redirect:/index.jsp" /> -->
+	<!-- 必须写全。不能使用试图映射器的前后缀的！！！ -->
+	<mvc:view-controller path="/content-add" view-name="forward:/WEB-INF/jsp/content-add.jsp"/>
+	<mvc:view-controller path="/import" view-name="forward:/WEB-INF/jsp/solr/importAll.jsp" />
+
+	
+	
+	<!-- dubbo -->
+	<dubbo:reference id="tbUserService" interface="com.taotao.service.TbUserService"  ></dubbo:reference>
+	<dubbo:reference id="tbItemService" interface="com.taotao.service.TbItemService"></dubbo:reference>
+	<dubbo:reference id="tbItemCatService" interface="com.taotao.service.TbItemCatService"></dubbo:reference>
+	<dubbo:reference id="tbItemDescService" interface="com.taotao.service.TbItemDescService"></dubbo:reference>
+	<dubbo:reference id="tbItemParamService" interface="com.taotao.service.TbItemParamService"></dubbo:reference>
+	<dubbo:reference id="tbItemParamItemService" interface="com.taotao.service.TbItemParamItemService"></dubbo:reference>
+	<dubbo:reference id="tbContentService" interface="com.taotao.service.TbContentService" />
+	<dubbo:reference id="tbContentCategroyService" interface="com.taotao.service.TbContentCategroyService" />
+	<!-- solr -->
+	<dubbo:reference interface="com.taotao.solr.service.SearchService" id="searchService" protocol=""></dubbo:reference>
+	
+</beans>

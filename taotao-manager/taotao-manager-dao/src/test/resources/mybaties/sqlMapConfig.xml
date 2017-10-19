@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 加载属性文件 -->
+	<properties resource="properties/db.properties"></properties>
+
+	<settings>
+		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="aggressiveLazyLoading" value="false" />
+		<setting name="cacheEnabled" value="true" />
+	</settings>
+	<!-- 别名定义 -->
+	<typeAliases>
+		<package name="com.mm.pojo" />
+	</typeAliases>
+	<!-- 测试为什么不行 -->
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor">
+			<property name="helperDialect" value="mysql" />
+			<property name="offsetAsPageNum" value="false" /><!-- 是否将offset作为pageNum -->
+			<property name="rowBoundsWithCount" value="false" /><!-- 默认为false，设为true将执行查询count -->
+			<property name="pageSizeZero" value="false" /><!-- 默认false。如果是true，如果pageSize为0，就查询所有。 -->
+			<property name="reasonable" value="true" /><!-- 默认flase。当true：pageSize<=0查询第一页/pageSize>=max,查询最后一页 -->
+			<property name="supportMethodsArguments" value="false" />
+			<property name="autoRuntimeDialect" value="false" /><!-- 自动识别方言 
+				,如果连接不同数据库的话设为true.true的时候要同时注意配置closeConn -->
+			<property name="returnPageInfo" value="none" />
+			<property name="closeConn" value="false" /><!-- 默认true。当您使用运行时动态数据源或不设置helperDialect属性时，  -->
+				<!-- PageHelper将自动获取数据库类型，然后自动获取数据库连接，此属性用于设置是否关闭连接，默认值为true关。当设置为'false'时，不会关闭连接。 -->
+		</plugin>
+	</plugins>
+	<!-- 和spring整合后 environments配置将废除 -->
+	<environments default="development">
+		<environment id="development">
+			<!-- 使用jdbc事务管理，事务控制由mybatis -->
+			<transactionManager type="JDBC" />
+			<!-- 数据库连接池，由mybatis管理 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driver}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<package name="com.taotao.dao" />
+	</mappers>
+
+
+</configuration>
